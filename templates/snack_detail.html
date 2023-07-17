@@ -6,7 +6,7 @@
 <p>Description: {{ snack.description }}</p>
 
 <a href="{% url 'snack_update' snack.id%}">Update</a>
-<a href="{% url 'snack_delete' snack.id%}">Delete</a>
-<a href="{% url 'snack_list' %}">Back to Snack List</a>
+<a href="{% url 'snack_delete' snack.id%}">Delete</a><br>
+<h2><a href="{% url 'snack_list' %}">Back to Snack List</a></h2>
 
 {% endblock%}

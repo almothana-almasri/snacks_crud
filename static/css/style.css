@@ -1,0 +1,23 @@
+body{
+    text-align: center;
+    background-color: rgb(39, 39, 39);
+}
+
+h1 {
+    color: aqua;
+}
+
+a, h2 {
+    color: rgb(130, 119, 255);
+}
+
+a:hover {
+    color: aqua;
+}
+a{
+    font-size: large;
+}
+p{
+    font-size: large;
+    color: rgb(179, 233, 222);
+}

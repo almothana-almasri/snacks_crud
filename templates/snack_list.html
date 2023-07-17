@@ -8,4 +8,5 @@
     <li><a href="{% url 'snack_detail' pk=snack.pk %}">{{ snack.title }}</a></li>
   {% endfor %}
 </ul>
+<h2><a href="{% url 'snack_create' %}">Add a new Snack</a></h2>
 {% endblock%}

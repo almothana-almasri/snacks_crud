@@ -34,11 +34,11 @@ class SnackTestCase(TestCase):
         data = {
             "title": "New Snack",
             "purchaser": self.user.id,
-            "description": "New Description",
+            "description": "New Snack Description",
         }
 
-        response = self.client.post(path=url, data=data, follow=True)
-        self.assertTemplateUsed(response, 'snack_detail.html')
+        response = self.client.post(path=url, data=data)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(len(Snack.objects.all()), 2)
         self.assertRedirects(response, reverse('snack_detail', args=[2]))
 
@@ -50,13 +50,14 @@ class SnackTestCase(TestCase):
             "description": "Updated Description",
         }
 
-        response = self.client.post(path=url, data=data, follow=True)
-        self.assertTemplateUsed(response, 'snack_detail.html')
+        response = self.client.post(path=url, data=data)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(len(Snack.objects.all()), 1)
         self.snack.refresh_from_db()
         self.assertEqual(self.snack.title, 'Updated Snack')
         self.assertEqual(self.snack.purchaser, self.user)
         self.assertEqual(self.snack.description, 'Updated Description')
+        self.assertRedirects(response, reverse('snack_list'))
 
     def test_snack_delete_view(self):
         url = reverse('snack_delete', args=[self.snack.pk])
