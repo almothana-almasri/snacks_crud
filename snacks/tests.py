@@ -9,9 +9,9 @@ class SnackTestCase(TestCase):
             username='random', email='random@random.com', password='random@12345'
         )
         self.snack = Snack.objects.create(
-            title='Test Snack', purchaser='Test Purchaser', description='Test Description'
+            title='Test Snack', purchaser=self.user, description='Test Description'
         )
-
+    
     def test_str_method(self):
         self.assertEqual(str(self.snack), 'Test Snack')
 
@@ -33,7 +33,7 @@ class SnackTestCase(TestCase):
         url = reverse('snack_create')
         data = {
             "title": "New Snack",
-            "purchaser": "New Purchaser",
+            "purchaser": self.user.id,
             "description": "New Description",
         }
 
@@ -46,16 +46,16 @@ class SnackTestCase(TestCase):
         url = reverse('snack_update', args=[self.snack.pk])
         data = {
             "title": "Updated Snack",
-            "purchaser": "Updated Purchaser",
+            "purchaser": self.user.id,
             "description": "Updated Description",
         }
 
         response = self.client.post(path=url, data=data, follow=True)
         self.assertTemplateUsed(response, 'snack_detail.html')
-        self.assertEqual(len(Snack.objects.all()), 1)  # No new snack created
+        self.assertEqual(len(Snack.objects.all()), 1)
         self.snack.refresh_from_db()
         self.assertEqual(self.snack.title, 'Updated Snack')
-        self.assertEqual(self.snack.purchaser, 'Updated Purchaser')
+        self.assertEqual(self.snack.purchaser, self.user)
         self.assertEqual(self.snack.description, 'Updated Description')
 
     def test_snack_delete_view(self):
